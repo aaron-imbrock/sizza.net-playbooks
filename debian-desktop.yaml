@@ -3,9 +3,9 @@
   hosts: all
   become: yes
   tasks:
-    - name: Set timezone to UTC
+    - name: Set timezone to PST
       ansible.builtin.timezone:
-        name: UTC
+        name: PST
     - name: Set default search domain to sizza.net
       ansible.builtin.lineinfile:
         path: /etc/resolv.conf
