@@ -1,0 +1,27 @@
+---
+- name: Git user config and github setup
+  hosts: all
+  become: yes
+  become_user: aimbrock
+  become_method: sudo
+  vars:
+    ansible_become_flags: "-H"  # Ensures proper home directory usage
+  tasks:
+    - name: Set Git global configs
+      community.general.git_config:
+        name: "{{ item.name }}"
+        scope: global
+        value: "{{ item.value }}"
+      loop:
+        - name: user.name
+          value: 'Aaron Imbrock'
+        - name: user.email
+          value: 'aimbrock@gmail.com'
+        - name: core.editor
+          value: 'code --wait'
+        - name: init.defaultbranch
+          value: 'main'
+        - name: pull.rebase
+          value: 'false'
+        - name: core.pager
+          value: 'cat'

@@ -1,0 +1,83 @@
+---
+- name: Debian OS Updates and base packages
+  hosts: all
+  become: yes
+  tasks:
+    - name: Set timezone to UTC
+      ansible.builtin.timezone:
+        name: UTC
+
+    - name: Set default search domain to sizza.net
+      ansible.builtin.lineinfile:
+        path: /etc/resolv.conf
+        line: "search sizza.net"
+        create: yes
+        state: present
+
+    - name: Disable install recommends and suggests
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/80no-install-recommends
+        content: |
+          APT::Install-Recommends "0";
+          APT::Install-Suggests "0";
+          
+    - name: Update Base OS
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: full
+        autoclean: yes
+
+
+
+    - name: Ensure /etc/systemd/sleep.conf.d directory exists
+      ansible.builtin.file:
+        path: /etc/systemd/sleep.conf.d
+        state: directory
+        mode: "0755"
+
+    - name: Create nosuspend.conf to disable sleep options
+      ansible.builtin.copy:
+        dest: /etc/systemd/sleep.conf.d/nosuspend.conf
+        content: |
+          [Sleep]
+          AllowSuspend=no
+          AllowHibernation=no
+          AllowSuspendThenHibernate=no
+          AllowHybridSleep=no
+        mode: "0644"
+        force: no
+
+    - name: Create ansible system user
+      ansible.builtin.user:
+        name: ansible
+        shell: /bin/bash
+        system: yes
+        create_home: yes
+        state: present
+
+- name: Install standard packages
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install packages
+      ansible.builtin.apt:
+        pkg:
+          - aptitude
+          - apt-transport-https
+          - build-essential
+          - ca-certificates
+          - curl
+          - debian-archive-keyring
+          - debsig-verify
+          - git
+          - gnupg2
+          - lsb-release
+          - python3-pip
+          - python3-setuptools
+          - software-properties-common
+          - vim
+          - pipx
+          - tmux
+          - tree
+        state: latest
+        update_cache: true

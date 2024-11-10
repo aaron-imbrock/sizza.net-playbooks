@@ -1,0 +1,57 @@
+---
+
+- name: Docker Server Setup 
+  serial:
+    - 100%
+  hosts: 
+    - localhost
+    - dockerServer
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Remove possible conflicting packages
+      ansible.builtin.apt:
+        state: absent
+        purge: true
+        pkg:
+          - docker.io
+          - docker-doc
+          - docker-compose
+          - podman-docker
+          - containerd
+          - runc
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Update Apt Cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install required system packages
+      ansible.builtin.apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - gnupg
+          - lsb-release
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+          - docker-ce 
+          - docker-ce-cli 
+          - containerd.io 
+          - docker-buildx-plugin 
+          - docker-compose-plugin
+        state: latest
+        update_cache: true

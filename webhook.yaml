@@ -1,0 +1,26 @@
+--- 
+- name: Webhook CD Server Setup
+  serial:
+    - 100%
+  hosts: dockerServer
+  become: yes
+  tasks:
+    - name: Install Webhook
+      ansible.builtin.apt:
+        pkg:
+          - webhook
+        state: latest
+        update_cache: true
+
+    - name: Create webhook config directory in /etc
+      ansible.builtin.file:
+        state: directory
+        path: /etc/webhook
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create webhook config file
+      ansible.builtin.file:
+        path: "/etc/webhook/hooks.json"
+        state: touch
