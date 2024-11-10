@@ -89,6 +89,7 @@
     - name: Install required packages
       ansible.builtin.apt:
         name:
+          - qbittorrent
           - gpg
           - software-properties-common
           - apt-transport-https
