@@ -2,7 +2,10 @@
 - name: Debian OS Updates and base packages
   hosts: all
   become: yes
+  vars:
+    tz: America/Los_Angeles
   tasks:
+    - import_playbook: timezone.yaml
     - name: Set timezone to PST
       ansible.builtin.timezone:
         name: America/Los_Angeles
@@ -31,7 +34,7 @@
       ansible.builtin.copy:
         dest: /etc/apt/sources.list.d/sources.list
         content: |
-          deb http://mirrors.wikimedia.org/debian/ bookworm main contrib non-free non-free-firmware 
+          deb http://mirrors.wikimedia.org/debian/ bookworm main contrib non-free non-free-firmware
           deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
           deb http://mirrors.wikimedia.org/debian/ bookworm-updates main contrib non-free non-free-firmware
           # Debian Backports - https://backports.debian.org/Instructions/
@@ -73,7 +76,7 @@
     #         url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh
     #         dest: /tmp/nvm_install.sh
     #         mode: '0755'
-   
+
     #     - name: Install Node.js using NVM
     #       ansible.builtin.shell: /tmp/nvm_install.sh | bash
 
@@ -137,11 +140,11 @@
     - name: Unattended Upgrades Dry Run
       ansible.builtin.command:
         argv:
-        - /usr/bin/unattended-upgrades
-        - --dry-run
-        - --debug
+          - /usr/bin/unattended-upgrades
+          - --dry-run
+          - --debug
       register: out
-      
+
     - debug: var=out.stdout_lines
     # - name: Install npm packages "eslint", "live server"
     #   ansible.builtin.shell: npm install --global live-server eslint
@@ -154,23 +157,23 @@
           register: vim_check
           changed_when: false
           failed_when: false
-    
+
         - name: Install vim if not present
           ansible.builtin.apt:
             name: vim
             state: present
           when: vim_check.rc != 0
-    
+
         - name: Set vim as an alternative for editor
           ansible.builtin.alternatives:
             name: editor
             path: /usr/bin/vim.basic
             priority: 100
-    
+
         - name: Set vim as the default editor
           ansible.builtin.alternatives:
             name: editor
             path: /usr/bin/vim
-            
+
     - name: Clear and regenerate font cache
       ansible.builtin.shell: fc-cache -fv
