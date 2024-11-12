@@ -5,7 +5,7 @@
   tasks:
     - name: Set timezone to PST
       ansible.builtin.timezone:
-        name: PST
+        name: America/Los_Angeles
     - name: Set default search domain to sizza.net
       ansible.builtin.lineinfile:
         path: /etc/resolv.conf
