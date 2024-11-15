@@ -114,6 +114,7 @@
           - brightnessctl
           - alacritty
           - pipx
+          - xclip
           # - node
         state: present
     - name: Install Unattended Upgrades Package
