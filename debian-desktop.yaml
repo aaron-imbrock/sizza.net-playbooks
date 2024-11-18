@@ -1,6 +1,6 @@
 ---
 - name: Debian OS Updates and base packages
-  hosts: all
+  hosts: desktop
   become: yes
   vars:
     tz: America/Los_Angeles
