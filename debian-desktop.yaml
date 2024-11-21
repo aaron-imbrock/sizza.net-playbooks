@@ -92,6 +92,7 @@
     - name: Install required packages
       ansible.builtin.apt:
         name:
+          - libxcb-cursor0
           - qbittorrent
           - gpg
           - software-properties-common
