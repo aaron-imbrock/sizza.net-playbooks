@@ -63,6 +63,7 @@
       ansible.builtin.apt:
         pkg:
           - aptitude
+          - inotify-tools
           - apt-transport-https
           - build-essential
           - ca-certificates
