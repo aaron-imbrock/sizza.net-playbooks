@@ -92,6 +92,7 @@
     - name: Install required packages
       ansible.builtin.apt:
         name:
+          - hexchat
           - inotify-tools
           - libxcb-cursor0
           - qbittorrent
