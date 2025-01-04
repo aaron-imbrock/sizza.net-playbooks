@@ -6,7 +6,7 @@
     - name: Import timezone task
       ansible.builtin.import_tasks: set_timezone.yaml
       vars:
-        tz: America/Los_angeles
+        tz: America/Los_Angeles
     - name: Set default search domain to sizza.net
       ansible.builtin.lineinfile:
         path: /etc/resolv.conf
