@@ -4,7 +4,7 @@
   become: yes
   tasks:
     - name: Import timezone task
-      ansible.builtin.import_tasks: timezone.yaml
+      ansible.builtin.import_tasks: set_timezone.yaml
       vars:
         tz: America/Los_angeles
     - name: Set default search domain to sizza.net
