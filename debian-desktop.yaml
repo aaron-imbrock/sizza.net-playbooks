@@ -2,11 +2,11 @@
 - name: Debian OS Updates and base packages
   hosts: desktop
   become: yes
-- name: Set timezone to PST
-  ansible.builtin.import_playbook: timezone.yaml
-  vars:
-    tz: America/Los_Angeles
   tasks:
+    - name: Import timezone task
+      ansible.builtin.import_tasks: timezone.yaml
+      vars:
+        tz: America/Los_angeles
     - name: Set default search domain to sizza.net
       ansible.builtin.lineinfile:
         path: /etc/resolv.conf
