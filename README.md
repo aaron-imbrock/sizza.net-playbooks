@@ -27,7 +27,7 @@ useradd -r -m -s /bin/bash ansible
 
 Setup Debian Desktop with basic things:
 ```bash
-sudo -u ansible bash -c "curl https://raw.githubusercontent.com/aaron-imbrock/ansible-playbooks/refs/heads/main/debian-desktop.yaml | ansible-playbook -c local -i "127.0.0.1," /dev/stdin"
+sudo -u ansible bash -c "curl https://raw.githubusercontent.com/aaron-imbrock/sizza.net-playbooks/refs/heads/main/debian-desktop.yaml | ansible-playbook -c local -i "127.0.0.1," /dev/stdin"
 ```
 Setup Debian Server with basic things:
 ```bash
