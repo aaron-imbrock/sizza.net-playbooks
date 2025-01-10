@@ -1,6 +1,7 @@
 ---
 - name: Debian OS Updates and base packages
   hosts: desktop
+  serial: 3
   become: yes
   tasks:
     - name: Import timezone task
@@ -117,6 +118,8 @@
           - alacritty
           - pipx
           - xclip
+          - mesa-vulkan-drivers
+          - jq
           # - node
         state: present
     - name: Install Unattended Upgrades Package
