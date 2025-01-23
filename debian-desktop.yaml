@@ -91,6 +91,7 @@
     - name: Install required packages
       ansible.builtin.apt:
         name:
+          - syslog-ng
           - tmux
           - hexchat
           - inotify-tools
